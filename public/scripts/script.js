@@ -31,6 +31,8 @@ donutForm.addEventListener("submit",event=>{
         return res.json()
     }).then(data=>{
         console.log(data);
-        location.reload();
+        setTimeout(()=>{
+            location.reload();
+        },1000)
     })
 })

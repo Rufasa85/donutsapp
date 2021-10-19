@@ -1,37 +1,11 @@
 const express = require("express");
-const path = require("path")
+const path = require("path");
+const fs = require("fs");
 const app = express();
 
 const PORT = 3000;
 
-const donuts = [
-    {
-        id:1,
-        name:"Boston Creme",
-        price:3.99
-    },
-    {
-        id:2,
-        name:"apple fritter",
-        price:5.99
-    },
-    {
-        id:3,
-        name:"Maple Bar",
-        price:4.99
-    },
-    {
-        id:4,
-        name:"Glazed",
-        price:4.99
-    },
-    {
-        id:5,
-        name:"Old Fashioned",
-        price:3.99
-    }
-
-]
+const donuts = require("./db/donuts.json")
 
 app.use(express.static("public"))
 
@@ -58,7 +32,10 @@ app.get("/api/donuts/:id",(req,res)=>{
 app.post("/api/donuts",(req,res)=>{
     console.log(req.body);
     donuts.push(req.body)
+    fs.writeFileSync("./db/donuts.json",JSON.stringify(donuts,null,4))
+    console.log("done")
     res.json({message:"data recieved"})
+     
 })
 
 app.listen( PORT,()=>{
